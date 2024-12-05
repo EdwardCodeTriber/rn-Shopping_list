@@ -1,47 +1,25 @@
-import { useRef, useEffect } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
-import LottieView from 'lottie-react-native';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './Redux/Store';
+import ShoppingListScreen from './screens/ShoppingListScreen';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 export default function App() {
-  const animation = useRef(null);
-  useEffect(() => {
-    // You can control the ref programmatically, rather than using autoPlay
-    // animation.current?.play();
-  }, []);
-
   return (
-    <View style={styles.animationContainer}>
-      <LottieView
-        autoPlay
-        ref={animation}
-        style={{
-          width: 700,
-          height: 700,
-          backgroundColor: '#eee',
-        }}
-        source={require('./assets/home.json')}
-      />
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Restart Animation"
-          onPress={() => {
-            animation.current?.reset();
-            animation.current?.play();
-          }}
-        />
-      </View>
-    </View>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaView style={styles.container}>
+          <ShoppingListScreen />
+        </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  animationContainer: {
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  container: {
     flex: 1,
-  },
-  buttonContainer: {
-    paddingTop: 10,
+    backgroundColor: '#f5f5f5',
   },
 });
