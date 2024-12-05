@@ -22,9 +22,11 @@ export default function ShoppingListScreen() {
   const [itemQuantity, setItemQuantity] = useState('1');
   const [editingItem, setEditingItem] = useState(null);
 
+  //
   const dispatch = useDispatch();
   const shoppingItems = useSelector(state => state.shoppingList.items);
 
+  //
   const handleAddItem = () => {
     if (!itemName.trim()) {
       Alert.alert('Error', 'Please enter an item name');
@@ -46,12 +48,14 @@ export default function ShoppingListScreen() {
     setItemQuantity('1');
   };
 
+  //
   const handleEditItem = (item) => {
     setEditingItem(item);
     setItemName(item.name);
     setItemQuantity(item.quantity.toString());
   };
 
+  //
   const handleDeleteItem = (id) => {
     Alert.alert(
       'Delete Item',
@@ -67,6 +71,7 @@ export default function ShoppingListScreen() {
     );
   };
 
+  //
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <TouchableOpacity 
