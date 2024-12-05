@@ -14,7 +14,7 @@ import {
   editItem, 
   deleteItem, 
   togglePurchased 
-} from './shoppingListSlice';
+} from '../Redux/ShoppingListSlice';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function ShoppingListScreen() {
