@@ -75,6 +75,7 @@ const ItemsListScreen = ({ route }) => {
             </TouchableOpacity>
             <Text style={styles.itemText}>{item.name}</Text>
             <TouchableOpacity onPress={() => handleDeleteItem(item.id)}>
+            <Text style={styles.editText}>edit</Text>
               <Text style={styles.deleteText}>✖</Text>
             </TouchableOpacity>
           </View>
@@ -163,6 +164,10 @@ const styles = StyleSheet.create({
     flex: 1,
     color: "#FFFFFF",
     marginHorizontal: 12,
+  },
+  editText: {
+    color: "yellow",
+    fontSize: 18,
   },
   deleteText: {
     color: "#FF0000",
