@@ -1,33 +1,24 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCategory, deleteCategory } from '../Redux/categorySlice';
+import { useNavigation } from '@react-navigation/native';
 
 const ShoppingList = () => {
-  const [categories, setCategories] = useState([
-    { id: 1, name: 'Bakery', color: '#00FF00' },
-    { id: 2, name: 'Fruit & Veg', color: '#FF8C00' },
-    { id: 3, name: 'Meat', color: '#FF0000' },
-    { id: 4, name: 'Dairy', color: '#FF00FF' },
-    { id: 5, name: 'Household', color: '#00FFFF' },
-  ]);
-
   const [newCategory, setNewCategory] = useState('');
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const categories = useSelector(state => state.categories.items);
 
   const handleAddCategory = () => {
     if (newCategory.trim() !== '') {
-      const newId = categories.length + 1;
-      const newCategoryObject = { id: newId, name: newCategory, color: getRandomColor() };
-      setCategories([...categories, newCategoryObject]);
+      dispatch(addCategory(newCategory));
       setNewCategory('');
     }
   };
 
-  const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+  const handleNavigateToItems = (category) => {
+    navigation.navigate('ItemsList', { category });
   };
 
   return (
@@ -38,7 +29,7 @@ const ShoppingList = () => {
         renderItem={({ item }) => (
           <View style={[styles.categoryItem, { backgroundColor: item.color }]}>
             <Text style={styles.categoryName}>{item.name}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => handleNavigateToItems(item)}>
               <Text style={styles.categoryArrow}>→</Text>
             </TouchableOpacity>
           </View>
@@ -62,7 +53,7 @@ const ShoppingList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#2D2E37',
     paddingHorizontal: 16,
     paddingVertical: 24,
   },
